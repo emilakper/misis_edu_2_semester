@@ -64,7 +64,7 @@ public:
     std::istream& readFrom(std::istream& istrm);
 private:
     int32_t num_{ 0 };
-    int32_t denum_{ 0 };
+    int32_t denum_{ 1 };
     static const char separator{ '/' };
 };
 
