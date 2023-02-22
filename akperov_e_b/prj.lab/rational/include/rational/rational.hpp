@@ -16,13 +16,13 @@ public:
 
     Rational& operator=(const Rational& rhs);
     Rational& operator+=(const Rational& rhs);
-    Rational& operator+=(const int32_t rhs) { return operator+=(Rational(rhs, 1)); }
+    Rational& operator+=(const int32_t& rhs) { return operator+=(Rational(rhs, 1)); }
     Rational& operator-=(const Rational& rhs);
-    Rational& operator-=(const int32_t rhs) { return operator-=(Rational(rhs, 1)); }
+    Rational& operator-=(const int32_t& rhs) { return operator-=(Rational(rhs, 1)); }
     Rational& operator*=(const Rational& rhs);
-    Rational& operator*=(const int32_t rhs) { return operator*=(Rational(rhs, 1)); }
+    Rational& operator*=(const int32_t& rhs) { return operator*=(Rational(rhs, 1)); }
     Rational& operator/=(const Rational& rhs);
-    Rational& operator/=(const int32_t rhs) { return operator/=(Rational(rhs, 1)); }
+    Rational& operator/=(const int32_t& rhs) { return operator/=(Rational(rhs, 1)); }
     Rational& operator++(int);
     Rational& operator--(int);
 
