@@ -3,6 +3,14 @@
 
 #include <rational/rational.hpp>
 
+Rational InputRational(const std::string& str)
+{
+	std::istringstream istrm(str);
+	Rational z;
+	istrm >> z;
+	return z;
+}
+
 TEST_CASE("Testing ctor") {
 	CHECK(Rational() == Rational(0, 1));
 	CHECK(Rational(10, 6) == Rational(5, 3));
@@ -115,4 +123,16 @@ TEST_CASE("Dividing by 0") {
 	Rational x = Rational(2, 3);
 	CHECK_THROWS(x /= 0);
 	CHECK_THROWS(x /= Rational(0, 5));
+}
+
+TEST_CASE("Checking input system") {
+	CHECK(InputRational("-5/4") == Rational(-5,4));
+	CHECK(InputRational("9/3") == Rational(3, 1));
+	CHECK(InputRational("0/9") == Rational(0, 1));
+	CHECK_THROWS(InputRational("k/4"));
+	CHECK_THROWS(InputRational("5/k"));
+	CHECK_THROWS(InputRational("5-3"));
+	CHECK_THROWS(InputRational("3/4kkk"));
+	CHECK_THROWS(InputRational("3/-4"));
+	CHECK_THROWS(InputRational("k3/4"));
 }

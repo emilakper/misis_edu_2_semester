@@ -196,22 +196,8 @@ std::istream& Rational::readFrom(std::istream& istrm)
     int32_t numerator(0);
     char comma(0);
     int32_t denumerator(-1);
-    if (!isdigit(istrm.peek())) {
-        istrm.setstate(std::ios_base::failbit);
-    }
-    istrm >> numerator;
-    if (isspace(istrm.peek())) {
-        istrm.setstate(std::ios_base::failbit);
-    }
-    istrm >> comma;
-    if (!isdigit(istrm.peek())) {
-        istrm.setstate(std::ios_base::failbit);
-    }
-    istrm >> denumerator;
-    if (!istrm.eof()) {
-        istrm.setstate(std::ios_base::failbit);
-    }
-    if (istrm.fail() || denumerator < 0
+    istrm >> numerator >> comma >> denumerator;
+    if (!istrm.eof() || denumerator < 0
         || Rational::separator != comma) {
         throw input_error;
     }

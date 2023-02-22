@@ -238,7 +238,7 @@ int main() {
     testInput("5/-7");
     std::cout << "Correct reading:" << std::endl;
     testInput("5/8");
-    testInput("3/7");
+    testInput("-3/7");
     std::cout << "Correct reducing and special situations:" << std::endl;
     testInput("0/9");
     testInput("8/10");
