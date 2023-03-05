@@ -15,6 +15,7 @@ TEST_CASE("Testing ctor") {
 	CHECK(Rational() == Rational(0, 1));
 	CHECK(Rational(10, 6) == Rational(5, 3));
 	CHECK(Rational(-10, 6) == Rational(-5, 3));
+	CHECK(Rational(-5) == Rational(-5, 1));
 	CHECK_THROWS(Rational(10, -6) == Rational(-5, 3));
 	CHECK_THROWS(Rational(1, 0));
 }

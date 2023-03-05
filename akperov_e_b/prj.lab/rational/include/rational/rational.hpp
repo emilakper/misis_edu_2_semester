@@ -12,9 +12,11 @@ public:
     Rational() = default;
     Rational(const Rational&) = default;
     Rational(int32_t num, int32_t denum);
+    explicit Rational(int32_t num) { num_ = num; denum_ = 1; };
     ~Rational() = default;
 
     Rational& operator=(const Rational& rhs);
+    Rational& operator=(const int32_t& rhs);
     Rational& operator+=(const Rational& rhs);
     Rational& operator+=(const int32_t& rhs) { return operator+=(Rational(rhs, 1)); }
     Rational& operator-=(const Rational& rhs);

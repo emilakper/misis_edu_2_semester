@@ -7,6 +7,13 @@ Rational& Rational::operator=(const Rational& rhs)
     return *this;
 }
 
+Rational& Rational::operator=(const int32_t& rhs)
+{
+    num_ = rhs;
+    denum_ = 1;
+    return *this;
+}
+
 Rational operator+(const Rational& lhs, const Rational& rhs)
 {
     Rational sum(lhs);
