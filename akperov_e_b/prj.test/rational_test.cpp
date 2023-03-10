@@ -127,13 +127,39 @@ TEST_CASE("Dividing by 0") {
 }
 
 TEST_CASE("Checking input system") {
-	CHECK(InputRational("-5/4") == Rational(-5,4));
-	CHECK(InputRational("9/3") == Rational(3, 1));
-	CHECK(InputRational("0/9") == Rational(0, 1));
-	CHECK_THROWS(InputRational("k/4"));
-	CHECK_THROWS(InputRational("5/k"));
-	CHECK_THROWS(InputRational("5-3"));
-	CHECK_THROWS(InputRational("3/4kkk"));
-	CHECK_THROWS(InputRational("3/-4"));
-	CHECK_THROWS(InputRational("k3/4"));
+	Rational x = InputRational("1 /4");
+	CHECK(Rational(0, 1) == x);
+	x = InputRational("1/4 ");
+	CHECK(Rational(1, 4) == x);
+	x = InputRational("k/4");
+	CHECK(Rational(0, 1) == x);
+	x = InputRational("3/4k");
+	CHECK(Rational(3, 4) == x);
+	x = InputRational("4/k");
+	CHECK(Rational(0, 1) == x);
+	x = InputRational("6/8");
+	CHECK(Rational(3, 4) == x);
+	x = InputRational("4-3");
+	CHECK(Rational(0, 1) == x);
+	x = InputRational("89/43 ");
+	CHECK(Rational(89, 43) == x);
+	x = InputRational("k3/4");
+	CHECK(Rational(0, 1) == x);
+	x = Rational(1, 3);
+	x = InputRational("2 /5");
+	CHECK(Rational(0, 1) == x);
+	x = Rational(1, 3);
+	x = InputRational("2/ 5");
+	CHECK(Rational(0, 1) == x);
+	x = Rational(1, 3);
+	x = InputRational("2");
+	CHECK(Rational(0, 1) == x);
+	std::string str_for_3 = "3/4 5/6 7/8";
+	std::istringstream istrm_for_3(str_for_3);
+	Rational y;
+	Rational z;
+	istrm_for_3 >> x >> y >> z;
+	CHECK(Rational(3, 4) == x);
+	CHECK(Rational(5, 6) == y);
+	CHECK(Rational(7, 8) == z);
 }

@@ -198,25 +198,37 @@ std::ostream& Rational::writeTo(std::ostream& ostrm) const
     ostrm << num_ << separator << denum_;
     return ostrm;
 }
-std::istream& Rational::readFrom(std::istream& istrm)
-{
-    int32_t numerator(0);
-    char comma(0);
-    int32_t denumerator(-1);
-    istrm >> numerator >> comma >> denumerator;
-    if (!istrm.eof() || denumerator < 0
-        || Rational::separator != comma) {
-        throw input_error;
+
+std::istream& Rational::readFrom(std::istream& istrm) {
+    char comma{ 0 };
+    int32_t numerator{ 0 };
+    int32_t denumerator{ 0 };
+    istrm >> numerator;
+    if (isspace(istrm.peek())) {
+        istrm.setstate(std::ios_base::failbit);
+        istrm.setstate(std::ios_base::eofbit);
     }
-    else {
-        if (denumerator == 0) {
-            throw division_by_zero;
-        }
-        else {
+    istrm >> comma;
+    if (isspace(istrm.peek())) {
+        istrm.setstate(std::ios_base::failbit);
+        istrm.setstate(std::ios_base::eofbit);
+    }
+    istrm >> denumerator;
+    if (denumerator <= 0) {
+        istrm.setstate(std::ios_base::failbit);
+        istrm.setstate(std::ios_base::eofbit);
+    }
+    if (istrm.fail() == false && istrm.eof() == true)
+        istrm.clear();
+    if (istrm.good()) {
+        if (Rational::separator == comma) {
             num_ = numerator;
             denum_ = denumerator;
             reduce_rational();
         }
-        return istrm;
+        else {
+            istrm.setstate(std::ios_base::failbit);
+        }
     }
+    return istrm;
 }
