@@ -3,12 +3,11 @@
 
 #include <rational/rational.hpp>
 
-Rational InputRational(const std::string& str)
+Rational InputRational(const std::string& str, Rational& rat)
 {
 	std::istringstream istrm(str);
-	Rational z;
-	istrm >> z;
-	return z;
+	istrm >> rat;
+	return rat;
 }
 
 TEST_CASE("Testing ctor") {
@@ -127,33 +126,15 @@ TEST_CASE("Dividing by 0") {
 }
 
 TEST_CASE("Checking input system") {
-	Rational x = InputRational("1 /4");
-	CHECK(Rational(0, 1) == x);
-	x = InputRational("1/4 ");
+	Rational x;
+	InputRational("1/4 ", x);
 	CHECK(Rational(1, 4) == x);
-	x = InputRational("k/4");
-	CHECK(Rational(0, 1) == x);
-	x = InputRational("3/4k");
+	InputRational(" 1/2 ", x);
+	CHECK(Rational(1, 2) == x);
+	InputRational("1/7k", x);
+	CHECK(Rational(1, 7) == x);
+	InputRational("6/8", x);
 	CHECK(Rational(3, 4) == x);
-	x = InputRational("4/k");
-	CHECK(Rational(0, 1) == x);
-	x = InputRational("6/8");
-	CHECK(Rational(3, 4) == x);
-	x = InputRational("4-3");
-	CHECK(Rational(0, 1) == x);
-	x = InputRational("89/43 ");
-	CHECK(Rational(89, 43) == x);
-	x = InputRational("k3/4");
-	CHECK(Rational(0, 1) == x);
-	x = Rational(1, 3);
-	x = InputRational("2 /5");
-	CHECK(Rational(0, 1) == x);
-	x = Rational(1, 3);
-	x = InputRational("2/ 5");
-	CHECK(Rational(0, 1) == x);
-	x = Rational(1, 3);
-	x = InputRational("2");
-	CHECK(Rational(0, 1) == x);
 	std::string str_for_3 = "3/4 5/6 7/8";
 	std::istringstream istrm_for_3(str_for_3);
 	Rational y;
@@ -162,4 +143,22 @@ TEST_CASE("Checking input system") {
 	CHECK(Rational(3, 4) == x);
 	CHECK(Rational(5, 6) == y);
 	CHECK(Rational(7, 8) == z);
+
+	x = Rational(1, 3);
+	InputRational("1 /4", x);
+	CHECK(Rational(1, 3) == x);
+	InputRational("k/4", x);
+	CHECK(Rational(1, 3) == x);
+	InputRational("k/4", x);
+	CHECK(Rational(1, 3) == x);
+	InputRational("4/k", x);
+	CHECK(Rational(1, 3) == x);
+	InputRational("4-3", x);
+	CHECK(Rational(1, 3) == x);
+	InputRational("k3/4", x);
+	CHECK(Rational(1, 3) == x);
+	InputRational("3/ 4", x);
+	CHECK(Rational(1, 3) == x);
+	InputRational("3", x);
+	CHECK(Rational(1, 3) == x);
 }
