@@ -5,7 +5,7 @@
 #define RATIONAL_RATIONAL_HPP_20230218
 
 const std::exception division_by_zero("Error: Division by zero");
-const std::exception input_error("Error: Not correct format of input");
+const std::exception input_error("Error: Wrong input");
 
 class Rational {
 public:

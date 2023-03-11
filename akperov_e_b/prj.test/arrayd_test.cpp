@@ -2,39 +2,37 @@
 #include <doctest/doctest.h>
 
 #include <arrayd/arrayd.hpp>
-/*
+
 TEST_CASE("Test number 1") {
-resize нельзя до 0
-ar = br присваивание
-A br(ar)
-A ar(5)
-resize()
-[]
-A ar
-
-
 	ArrayD arr;
+	CHECK_THROWS(arr[0]);
+	CHECK(arr.ssize() == 0);
 	arr.resize(5);
-	arr[2] = 5.25;
-	arr[3] = 3.29;
-	CHECK(arr[2] == 5.25);
-	CHECK(arr[3] == 3.29);
-}*/
-
-TEST_CASE("Test number 1") {
-	ArrayD arr{ 10 };
 	for (int i = 0; i < arr.ssize(); i++) {
-		std::cout << arr[i] << "\t";
+		CHECK(arr[i] == 0.0);
 	}
+	CHECK_THROWS(arr[7]);
+	arr[1] = 56.24;
+	CHECK(arr[1] == 56.24);
 	ArrayD arr1(arr);
-	ArrayD arr2;
-	arr2 = arr1;
-	arr[2] = 5;
-	arr[3] = arr[2];
-	std::cout << arr[3] << std::endl;
-	std::cout << std::endl;
-	for (int i = 0; i < arr2.ssize(); i++) {
-		std::cout << arr2[i] << "\t";
+	for (int i = 0; i < arr1.ssize(); i++) {
+		CHECK(arr1[i] == arr[i]);
 	}
-	std::cout << arr.ssize() << std::endl;
+	arr1[1] = 78.25;
+	CHECK(arr1[1] != arr[1]);
+	arr1 = arr;
+	for (int i = 0; i < arr1.ssize(); i++) {
+		CHECK(arr1[i] == arr[i]);
+	}
+	arr.remove(3);
+	CHECK(arr[0] == arr1[0]);
+	CHECK(arr[1] == arr1[1]);
+	CHECK(arr[2] == arr1[3]);
+	CHECK(arr[3] == arr1[4]);
+	arr.insert(5.5,3);
+	CHECK(arr[0] == arr1[0]);
+	CHECK(arr[1] == arr1[1]);
+	CHECK(arr[2] == arr1[3]);
+	CHECK(arr[3] == 5.5);
+	CHECK(arr[4] == arr1[4]);
 }
