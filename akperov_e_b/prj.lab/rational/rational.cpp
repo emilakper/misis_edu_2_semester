@@ -163,14 +163,27 @@ int Rational::Nod()
     return num + denum;
 }
 
-Rational& Rational::operator++(int) {
+
+Rational& Rational::operator++() {
     num_ = num_ + denum_;
     return *this;
 }
 
-Rational& Rational::operator--(int) {
+Rational& Rational::operator--() {
     num_ = num_ - denum_;
     return *this;
+}
+
+Rational& Rational::operator++(int) {
+    Rational result = *this;
+    ++(*this);
+    return result;
+}
+
+Rational& Rational::operator--(int) {
+    Rational result = *this;
+    --(*this);
+    return result;
 }
 
 Rational& Rational::ReduceRational() {

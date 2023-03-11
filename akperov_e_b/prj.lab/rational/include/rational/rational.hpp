@@ -27,6 +27,8 @@ public:
     Rational& operator/=(const int32_t& rhs) { return operator/=(Rational(rhs, 1)); }
     Rational& operator++(int);
     Rational& operator--(int);
+    Rational& operator++();
+    Rational& operator--();
 
     bool operator==(const Rational& rhs) const {
         return (num_ == rhs.num_)
