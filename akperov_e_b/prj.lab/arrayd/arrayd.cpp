@@ -15,8 +15,8 @@ ArrayD::ArrayD(const std::ptrdiff_t size) {
 }
 
 ArrayD::ArrayD(const ArrayD& arr) {
-	capacity_ = arr.ssize();
-	size_ = arr.ssize();
+	capacity_ = arr.Ssize();
+	size_ = arr.Ssize();
 	data_ = new double[size_];
 	for (std::ptrdiff_t i = 0; i < arr.size_; i++) {
 		data_[i] = arr.data_[i];
@@ -26,8 +26,8 @@ ArrayD::ArrayD(const ArrayD& arr) {
 ArrayD& ArrayD::operator=(const ArrayD& rhs) {
 	if (&rhs != this) {
 		delete[] data_;
-		size_ = rhs.ssize();
-		capacity_ = rhs.ssize();
+		size_ = rhs.Ssize();
+		capacity_ = rhs.Ssize();
 		data_ = new double[size_];
 		for (std::ptrdiff_t i = 0; i < size_; ++i) {
 			data_[i] = rhs[i];

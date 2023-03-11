@@ -6,22 +6,22 @@
 TEST_CASE("Test number 1") {
 	ArrayD arr;
 	CHECK_THROWS(arr[0]);
-	CHECK(arr.ssize() == 0);
+	CHECK(arr.Ssize() == 0);
 	arr.Resize(5);
-	for (int i = 0; i < arr.ssize(); i++) {
+	for (int i = 0; i < arr.Ssize(); i++) {
 		CHECK(arr[i] == 0.0);
 	}
 	CHECK_THROWS(arr[7]);
 	arr[1] = 56.24;
 	CHECK(arr[1] == 56.24);
 	ArrayD arr1(arr);
-	for (int i = 0; i < arr1.ssize(); i++) {
+	for (int i = 0; i < arr1.Ssize(); i++) {
 		CHECK(arr1[i] == arr[i]);
 	}
 	arr1[1] = 78.25;
 	CHECK(arr1[1] != arr[1]);
 	arr1 = arr;
-	for (int i = 0; i < arr1.ssize(); i++) {
+	for (int i = 0; i < arr1.Ssize(); i++) {
 		CHECK(arr1[i] == arr[i]);
 	}
 	arr.Remove(3);

@@ -13,7 +13,7 @@ public:
 	explicit ArrayD(const std::ptrdiff_t size);
 	ArrayD& operator=(const ArrayD& rhs);
 	~ArrayD() { delete[] data_; }
-	std::ptrdiff_t ssize() const noexcept { return size_; };
+	std::ptrdiff_t Ssize() const noexcept { return size_; };
 	double& operator[](const std::ptrdiff_t i);
 	const double& operator[](const std::ptrdiff_t i) const;
 	void Resize(const std::ptrdiff_t size);
