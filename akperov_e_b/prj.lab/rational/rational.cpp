@@ -18,7 +18,7 @@ Rational operator+(const Rational& lhs, const Rational& rhs)
 {
     Rational sum(lhs);
     sum += rhs;
-    sum.reduce_rational();
+    sum.ReduceRational();
     return sum;
 }
 
@@ -40,7 +40,7 @@ Rational operator-(const Rational& lhs, const Rational& rhs)
 {
     Rational sum(lhs);
     sum -= rhs;
-    sum.reduce_rational();
+    sum.ReduceRational();
     return sum;
 }
 
@@ -62,7 +62,7 @@ Rational operator*(const Rational& lhs, const int32_t& rhs)
 {
     Rational mul(lhs);
     mul *= rhs;
-    mul.reduce_rational();
+    mul.ReduceRational();
     return mul;
 }
 
@@ -70,7 +70,7 @@ Rational operator*(const Rational& lhs, const Rational& rhs)
 {
     Rational mul(lhs);
     mul *= rhs;
-    mul.reduce_rational();
+    mul.ReduceRational();
     return mul;
 }
 
@@ -78,7 +78,7 @@ Rational operator*(const int32_t& lhs, const Rational& rhs)
 {
     Rational mul(rhs);
     mul *= lhs;
-    mul.reduce_rational();
+    mul.ReduceRational();
     return mul;
 }
 
@@ -86,7 +86,7 @@ Rational operator/(const Rational& lhs, const int32_t& rhs)
 {
     Rational div(lhs);
     div /= rhs;
-    div.reduce_rational();
+    div.ReduceRational();
     return div;
 }
 
@@ -94,7 +94,7 @@ Rational operator/(const Rational& lhs, const Rational& rhs)
 {
     Rational div(lhs);
     div /= rhs;
-    div.reduce_rational();
+    div.ReduceRational();
     return div;
 }
 
@@ -102,7 +102,7 @@ Rational operator/(const int32_t& lhs, const Rational& rhs)
 {
     Rational div(lhs,1);
     div /= rhs;
-    div.reduce_rational();
+    div.ReduceRational();
     return div;
 }
 
@@ -115,7 +115,7 @@ Rational& Rational::operator+=(const Rational& rhs)
 {
     num_ = num_ * rhs.denum_ + rhs.num_ * denum_;
     denum_ = rhs.denum_ * denum_;
-    reduce_rational();
+    ReduceRational();
     return *this;
 }
 
@@ -123,7 +123,7 @@ Rational& Rational::operator-=(const Rational& rhs)
 {
     num_ = num_ * rhs.denum_ - rhs.num_ * denum_;
     denum_ = rhs.denum_ * denum_;
-    reduce_rational();
+    ReduceRational();
     return *this;
 }
 
@@ -131,7 +131,7 @@ Rational& Rational::operator*=(const Rational& rhs)
 {
     num_ = num_ * rhs.num_;
     denum_ = denum_ * rhs.denum_;
-    reduce_rational();
+    ReduceRational();
     return *this;
 }
 
@@ -142,7 +142,7 @@ Rational& Rational::operator/=(const Rational& rhs)
             *this *= Rational(-rhs.denum_, -rhs.num_);
         else 
             *this *= Rational(rhs.denum_, rhs.num_);
-        reduce_rational();
+        ReduceRational();
         return *this;
     }
     else {
@@ -150,7 +150,7 @@ Rational& Rational::operator/=(const Rational& rhs)
     }
 }
 
-int Rational::nod()
+int Rational::Nod()
 {
     int32_t num = std::abs(num_);
     int32_t denum = denum_;
@@ -173,8 +173,8 @@ Rational& Rational::operator--(int) {
     return *this;
 }
 
-Rational& Rational::reduce_rational() {
-    int32_t reduce_coef = nod();
+Rational& Rational::ReduceRational() {
+    int32_t reduce_coef = Nod();
     if (reduce_coef != 1) {
         num_ /= reduce_coef;
         denum_ /= reduce_coef;
@@ -182,24 +182,27 @@ Rational& Rational::reduce_rational() {
     return *this;
 }
 
-Rational::Rational(int32_t num, int32_t denum)
-    : num_(num)
-    , denum_(denum)
-{
-    if (denum_ == 0)
+Rational::Rational(int32_t num, int32_t denum){
+    if (denum == 0)
         throw division_by_zero;
-    if (denum_ < 0)
-        throw input_error;
-    reduce_rational();
+    if (denum < 0) {
+        num_ = num * (-1);
+        denum_ = denum * (-1);
+    }
+    if (denum > 0) {
+        num_ = num;
+        denum_ = denum;
+    }
+    ReduceRational();
 }
 
-std::ostream& Rational::writeTo(std::ostream& ostrm) const
+std::ostream& Rational::WriteTo(std::ostream& ostrm) const
 {
     ostrm << num_ << separator << denum_;
     return ostrm;
 }
 
-std::istream& Rational::readFrom(std::istream& istrm) {
+std::istream& Rational::ReadFrom(std::istream& istrm) {
     char comma{ 0 };
     int32_t numerator{ 0 };
     int32_t denumerator{ 0 };
@@ -224,7 +227,7 @@ std::istream& Rational::readFrom(std::istream& istrm) {
         if (Rational::separator == comma) {
             num_ = numerator;
             denum_ = denumerator;
-            reduce_rational();
+            ReduceRational();
         }
         else {
             istrm.setstate(std::ios_base::failbit);

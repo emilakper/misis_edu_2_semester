@@ -59,11 +59,11 @@ public:
     bool operator>=(const Rational& rhs) const { return !operator<(rhs); }
     bool operator>=(const int32_t& rhs) const { return !operator<(rhs); }
 
-    int nod();
-    Rational& reduce_rational();
+    int Nod();
+    Rational& ReduceRational();
 
-    std::ostream& writeTo(std::ostream& ostrm) const;
-    std::istream& readFrom(std::istream& istrm);
+    std::ostream& WriteTo(std::ostream& ostrm) const;
+    std::istream& ReadFrom(std::istream& istrm);
 private:
     int32_t num_{ 0 };
     int32_t denum_{ 1 };
@@ -86,12 +86,12 @@ Rational operator-(const Rational& lhs);
 
 inline std::ostream& operator<<(std::ostream& ostrm, const Rational& rhs)
 {
-    return rhs.writeTo(ostrm);
+    return rhs.WriteTo(ostrm);
 }
 
 inline std::istream& operator>>(std::istream& istrm, Rational& rhs)
 {
-    return rhs.readFrom(istrm);
+    return rhs.ReadFrom(istrm);
 }
 
 #endif

@@ -16,9 +16,9 @@ public:
 	std::ptrdiff_t ssize() const noexcept { return size_; };
 	double& operator[](const std::ptrdiff_t i);
 	const double& operator[](const std::ptrdiff_t i) const;
-	void resize(const std::ptrdiff_t size);
-	void remove(std::ptrdiff_t index);
-	void insert(double val, std::ptrdiff_t index);
+	void Resize(const std::ptrdiff_t size);
+	void Remove(std::ptrdiff_t index);
+	void Insert(double val, std::ptrdiff_t index);
 private:
 	std::ptrdiff_t capacity_{ 0 };
 	std::ptrdiff_t size_{ 0 };

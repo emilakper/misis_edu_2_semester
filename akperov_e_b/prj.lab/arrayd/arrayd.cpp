@@ -54,7 +54,7 @@ const double& ArrayD::operator[](const std::ptrdiff_t i) const {
 	}
 }
 
-void ArrayD::resize(const std::ptrdiff_t size) {
+void ArrayD::Resize(const std::ptrdiff_t size) {
 	if (size < 1) {
 		throw out_of_range;
 	}
@@ -78,7 +78,7 @@ void ArrayD::resize(const std::ptrdiff_t size) {
 	}
 }
 
-void ArrayD::remove(std::ptrdiff_t index) {
+void ArrayD::Remove(std::ptrdiff_t index) {
 	if (index<0 || index>size_) {
 		throw out_of_range;
 	}
@@ -90,12 +90,12 @@ void ArrayD::remove(std::ptrdiff_t index) {
 		for (std::ptrdiff_t i = index; i < size_-1; i++) {
 			temp[i] = data_[i+1];
 		}
-		this->resize(size_ - 1);
+		this->Resize(size_ - 1);
 		data_ = temp;
 	}
 }
 
-void ArrayD::insert(double val, std::ptrdiff_t index) {
+void ArrayD::Insert(double val, std::ptrdiff_t index) {
 	if (index<0 || index>size_) {
 		throw out_of_range;
 	}
@@ -108,7 +108,7 @@ void ArrayD::insert(double val, std::ptrdiff_t index) {
 		for (std::ptrdiff_t i = index+1; i < size_ + 1; i++) {
 			temp[i] = data_[i - 1];
 		}
-		this->resize(size_ + 1);
+		this->Resize(size_ + 1);
 		data_ = temp;
 	}
 }
