@@ -225,7 +225,7 @@ std::istream& Rational::ReadFrom(std::istream& istrm) {
         istrm.setstate(std::ios_base::eofbit);
     }
     istrm >> comma;
-    if (isspace(istrm.peek())) {
+    if (comma != Rational::separator ||isspace(istrm.peek())) {
         istrm.setstate(std::ios_base::failbit);
         istrm.setstate(std::ios_base::eofbit);
     }
@@ -234,17 +234,10 @@ std::istream& Rational::ReadFrom(std::istream& istrm) {
         istrm.setstate(std::ios_base::failbit);
         istrm.setstate(std::ios_base::eofbit);
     }
-    if (istrm.fail() == false && istrm.eof() == true)
-        istrm.clear();
-    if (istrm.good()) {
-        if (Rational::separator == comma) {
-            num_ = numerator;
-            denum_ = denumerator;
-            ReduceRational();
-        }
-        else {
-            istrm.setstate(std::ios_base::failbit);
-        }
+    if (istrm.fail() == false) {
+        num_ = numerator;
+        denum_ = denumerator;
+        ReduceRational();
     }
     return istrm;
 }
