@@ -112,3 +112,62 @@ void ArrayD::Insert(double val, std::ptrdiff_t index) {
 		data_ = temp;
 	}
 }
+
+void ArrayD::resize(const std::ptrdiff_t size) {
+	if (size < 1) {
+		throw out_of_range;
+	}
+	else if (capacity_ < size) {
+		double* temp = new double[size];
+		for (std::ptrdiff_t i = 0; i < size; i++) {
+			temp[i] = 0.0;
+		}
+		for (std::ptrdiff_t i = 0; i < size_; i++) {
+			temp[i] = data_[i];
+		}
+		size_ = size;
+		capacity_ = size * 2;
+		data_ = temp;
+	}
+	else {
+		size_ = size;
+		for (std::ptrdiff_t i = size; i < capacity_; i++) {
+			data_[i] = 0.0;
+		}
+	}
+}
+
+void ArrayD::remove(std::ptrdiff_t index) {
+	if (index<0 || index>size_) {
+		throw out_of_range;
+	}
+	else {
+		double* temp = new double[size_ - 1];
+		for (std::ptrdiff_t i = 0; i < index; i++) {
+			temp[i] = data_[i];
+		}
+		for (std::ptrdiff_t i = index; i < size_ - 1; i++) {
+			temp[i] = data_[i + 1];
+		}
+		this->resize(size_ - 1);
+		data_ = temp;
+	}
+}
+
+void ArrayD::insert(double val, std::ptrdiff_t index) {
+	if (index<0 || index>size_) {
+		throw out_of_range;
+	}
+	else {
+		double* temp = new double[size_ + 1];
+		for (std::ptrdiff_t i = 0; i < index; i++) {
+			temp[i] = data_[i];
+		}
+		temp[index] = val;
+		for (std::ptrdiff_t i = index + 1; i < size_ + 1; i++) {
+			temp[i] = data_[i - 1];
+		}
+		this->resize(size_ + 1);
+		data_ = temp;
+	}
+}
