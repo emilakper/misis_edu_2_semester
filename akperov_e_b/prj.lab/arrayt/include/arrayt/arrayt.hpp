@@ -166,7 +166,7 @@ void ArrayT<T>::resize(const std::ptrdiff_t size) {
 	if (size < 1) {
 		throw out_of_range;
 	}
-	else if (capacity_ < size) {
+	else if (capacity_ <= size) {
 		T* temp = new T[size*2];
 		for (std::ptrdiff_t i = 0; i < size; i++) {
 			temp[i] = 0;
