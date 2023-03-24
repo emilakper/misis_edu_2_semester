@@ -7,10 +7,16 @@ Rational InputRational(const std::string& str, Rational& rat)
 {
 	std::istringstream istrm(str);
 	istrm >> rat;
+	std::cout << istrm.fail();
 	return rat;
 }
 
 TEST_CASE("Testing ctor") {
+	Rational x(1, 3);
+	InputRational("1/0", x);
+	CHECK(Rational(1, 3) == x);
+
+
 	CHECK(Rational() == Rational(0, 1));
 	CHECK(Rational(10, 6) == Rational(5, 3));
 	CHECK(Rational(-10, 6) == Rational(-5, 3));
