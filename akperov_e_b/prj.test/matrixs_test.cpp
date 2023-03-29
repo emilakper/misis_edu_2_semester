@@ -12,19 +12,19 @@ TEST_CASE("Test number 1") {
 			k++;
 		}
 	}
+	MatrixS mat555(3, 3);
 	for (std::ptrdiff_t i = 0; i < 3; ++i) {
 		for (std::ptrdiff_t j = 0; j < 3; ++j) {
 			std::cout << mat.at(i, j) << " ";
 		}
 		std::cout << std::endl;
 	}
-	mat.Resize(4, 5);
+	mat.resize(4, 5);
 	std::cout << std::endl;
-	for (std::ptrdiff_t i = 0; i < mat.rowCount(); ++i) {
-		for (std::ptrdiff_t j = 0; j < mat.colCount(); ++j) {
+	for (std::ptrdiff_t i = 0; i < mat.nRows(); ++i) {
+		for (std::ptrdiff_t j = 0; j < mat.nCols(); ++j) {
 			std::cout << mat.at(i, j) << " ";
 		}
 		std::cout << std::endl;
 	}
-    //CHECK(mat.at(0, 0) == 0);
 }
