@@ -6,7 +6,11 @@ MatrixS::MatrixS(const std::ptrdiff_t row_count, const std::ptrdiff_t col_count)
 	}
 	n_col_ = col_count;
 	n_row_ = row_count;
-	data_.resize(n_col_ * n_row_);
+
+	data_ = new int32_t[n_col_ * n_row_];
+	for (std::ptrdiff_t i = 0; i < n_col_ * n_row_; i++) {
+		data_[i] = 0;
+	}
 }
 
 MatrixS::MatrixS(const SizeType& size)
@@ -16,7 +20,11 @@ MatrixS::MatrixS(const SizeType& size)
 	}
 	n_col_ = std::get<1>(size);
 	n_row_ = std::get<0>(size);
-	data_.resize(n_col_ * n_row_);
+
+	data_ = new int32_t[n_col_ * n_row_];
+	for (std::ptrdiff_t i = 0; i < n_col_ * n_row_; i++) {
+		data_[i] = 0;
+	}
 }
 
 int32_t& MatrixS::at(const std::ptrdiff_t i_row, const std::ptrdiff_t j_col) {
@@ -64,7 +72,10 @@ void MatrixS::resize(const std::ptrdiff_t new_i, const std::ptrdiff_t new_j) {
 		throw out_of_range;
 	}
 	else {
-		std::vector<int32_t> new_data(new_i * new_j);
+		int32_t* new_data = new int32_t[new_i * new_j];
+		for (std::ptrdiff_t i = 0; i < new_i * new_j; i++) {
+			new_data[i] = 0;
+		}
 		for (std::ptrdiff_t i = 0; i < new_i && i < n_col_; ++i) {
 			for (std::ptrdiff_t j = 0; j < new_j && j < n_row_; ++j) {
 				new_data[i * new_j + j] = this->at(i, j);
@@ -72,7 +83,10 @@ void MatrixS::resize(const std::ptrdiff_t new_i, const std::ptrdiff_t new_j) {
 		}
 		n_row_ = new_i;
 		n_col_ = new_j;
+
+		delete[] data_;
 		data_ = new_data;
+		new_data = nullptr;
 	}
 }
 
@@ -80,4 +94,11 @@ void MatrixS::resize(const SizeType& new_size) {
 	this->resize(std::get<0>(new_size), std::get<1>(new_size));
 }
 
-
+MatrixS::MatrixS(const MatrixS& mat) {
+	n_row_ = mat.n_row_;
+	n_col_ = mat.n_row_;
+	data_ = new int32_t[n_col_ * n_row_];
+	for (std::ptrdiff_t i = 0; i < n_col_ * n_row_; i++) {
+		data_[i] = mat.data_[i];
+	}
+}

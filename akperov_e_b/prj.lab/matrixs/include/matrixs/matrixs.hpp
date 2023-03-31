@@ -13,14 +13,17 @@ public:
 public:
     explicit MatrixS(const SizeType& size = { 0, 0 });
     MatrixS(const std::ptrdiff_t row_count, const std::ptrdiff_t col_count);
-    ~MatrixS() = default;
+    ~MatrixS() {
+        delete[] data_;
+    };
     MatrixS& operator=(const MatrixS& rhs) = default;
-    MatrixS() = default;
-    MatrixS(const MatrixS&) = default;
+    MatrixS(const MatrixS& mat);
 
     std::ptrdiff_t nRows() const noexcept { return n_row_; }
     std::ptrdiff_t nCols() const noexcept { return n_col_; }
-    const SizeType& ssize() const noexcept { return SizeType {n_row_,n_col_}; };
+    const SizeType& ssize() const noexcept { 
+        return SizeType {n_row_,n_col_}; 
+    };
 
     int32_t& at(const SizeType& elem);
     const int32_t& at(const SizeType& elem) const;
@@ -32,7 +35,7 @@ public:
 private:
     std::ptrdiff_t n_row_{ 0 };
     std::ptrdiff_t n_col_{ 0 };
-    std::vector<int32_t> data_;
+    int32_t* data_{ nullptr };
 };
 
 #endif
