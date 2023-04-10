@@ -16,7 +16,7 @@ public:
     ~MatrixS() {
         delete[] data_;
     };
-    MatrixS& operator=(const MatrixS& rhs) = default;
+    MatrixS& operator=(const MatrixS& rhs);
     MatrixS(const MatrixS& mat);
 
     std::ptrdiff_t nRows() const noexcept { return n_row_; }

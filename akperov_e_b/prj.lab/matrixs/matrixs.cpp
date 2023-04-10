@@ -28,7 +28,7 @@ MatrixS::MatrixS(const SizeType& size)
 }
 
 int32_t& MatrixS::at(const std::ptrdiff_t i_row, const std::ptrdiff_t j_col) {
-	if (i_row < 0 || j_col < 0 || i_row >= n_row_ || j_col >= n_col_) {
+	if (i_row < 0 || j_col < 0) {
 		throw out_of_range;
 	}
 	if (i_row >= n_row_ || j_col >= n_col_) {
@@ -101,4 +101,17 @@ MatrixS::MatrixS(const MatrixS& mat) {
 	for (std::ptrdiff_t i = 0; i < n_col_ * n_row_; i++) {
 		data_[i] = mat.data_[i];
 	}
+}
+
+MatrixS& MatrixS::operator=(const MatrixS& rhs) {
+	if (&rhs != this) {
+		delete[] data_;
+		n_row_ = rhs.n_row_;
+		n_col_ = rhs.n_col_;
+		data_ = new int32_t[n_col_ * n_row_];
+		for (std::ptrdiff_t i = 0; i < n_col_ * n_row_; ++i) {
+			data_[i] = rhs.data_[i];
+		}
+	}
+	return *this;
 }
