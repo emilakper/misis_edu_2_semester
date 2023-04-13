@@ -40,4 +40,13 @@ TEST_CASE("Test number 1") {
 	mat2.at(2, 2) = 5;
 	CHECK(mat.at(2, 2) == 1);
 	CHECK(mat2.at(2, 2) == 5);
+	MatrixS mat3(mat2);
+	mat3.at(2, 2) = 100;
+	CHECK(mat3.at(2, 2) == 100);
+	CHECK(mat2.at(2, 2) == 5);
+	MatrixS mat4;
+	mat4 = mat2;
+	mat4.at(2, 2) = 150;
+	CHECK(mat4.at(2, 2) == 150);
+	CHECK(mat2.at(2, 2) == 5);
 }

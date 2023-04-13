@@ -15,3 +15,7 @@ add_test(NAME matrixs_test COMMAND matrixs_test)
 add_executable(arrayt_test "arrayt_test.cpp")
 target_link_libraries(arrayt_test arrayt doctest::doctest)
 add_test(NAME arrayt_test COMMAND arrayt_test)
+
+add_executable(geo2d_test "geo2d_test.cpp")
+target_link_libraries(geo2d_test geo2d doctest::doctest)
+add_test(NAME geo2d_test COMMAND geo2d_test)
