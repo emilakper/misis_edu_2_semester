@@ -28,9 +28,9 @@ namespace geometry {
         void WriteTo(std::ofstream& ostream) const;
         void ReadFrom(std::istream& istream);
     private:
-        Coordinates point_ {0.0, 0.0};
+        Coordinates point_{ 0.0, 0.0 };
     };
-    
+
     class Polyline : public Figure {
     public:
         constexpr Polyline() = default;
@@ -44,8 +44,8 @@ namespace geometry {
     protected:
         std::vector<Coordinates> vertex_{ {0.0,0.0} };
     };
-    
-    
+
+
     class Elipse : public Figure {
     public:
         constexpr Elipse() = default;
@@ -62,7 +62,7 @@ namespace geometry {
         double halfA_;
         double halfB_;
     };
-    
+
     class Segment :public Figure, protected Polyline {
     public:
         constexpr Segment() = default;
@@ -82,7 +82,7 @@ void geometry::Point::WriteTo(std::ofstream& ostream) const {
     ostream << "\\fill(" << std::get<0>(point_) << ", " << std::get<1>(point_) << ") circle(2pt);" << std::endl;
 }
 
-void geometry::Point::ReadFrom(std::istream& istream){
+void geometry::Point::ReadFrom(std::istream& istream) {
     istream >> std::get<0>(point_);
     istream >> std::get<1>(point_);
 }
@@ -98,7 +98,7 @@ constexpr geometry::Elipse::Elipse(const Coordinates& center, const double& half
 }
 
 void geometry::Elipse::WriteTo(std::ofstream& ostream) const {
-    ostream << "\\draw (" << std::get<0>(center_) << ", " << std::get<1>(center_) << ") ellipse (" << halfA_ << " and " << halfB_<<");" << std::endl;
+    ostream << "\\draw (" << std::get<0>(center_) << ", " << std::get<1>(center_) << ") ellipse (" << halfA_ << " and " << halfB_ << ");" << std::endl;
 }
 
 void geometry::Elipse::ReadFrom(std::istream& istream) {
@@ -130,7 +130,6 @@ void geometry::Polyline::ReadFrom(std::istream& istream) {
     vertex_.push_back(x);
 }
 
-//Определения методом для Segment
 geometry::Segment::Segment(std::initializer_list<Coordinates> il) {
     for (auto i : il) {
         vertex_.push_back(i);
@@ -209,7 +208,7 @@ void Style::Canvas::WriteTo(std::ofstream& os) const {
     os << "\\documentclass[tikz]{standalone}" << std::endl;
     os << "\\begin{document}" << std::endl;
     os << "\\begin{tikzpicture}[xscale=1,yscale=-1]" << std::endl;
-    os << "\t\\draw[help lines,use as bounding box] ("<<std::get<0>(startPoint_)<<","<<std::get<1>(startPoint_)<<") ("<< std::get<0>(endPoint_)<<","<< std::get<1>(endPoint_) << ");" << std::endl;
+    os << "\t\\draw[help lines,use as bounding box] (" << std::get<0>(startPoint_) << "," << std::get<1>(startPoint_) << ") (" << std::get<0>(endPoint_) << "," << std::get<1>(endPoint_) << ");" << std::endl;
     for (const auto& shape : shapes_) {
         os << "\t ";
         shape->WriteTo(os);
@@ -226,5 +225,3 @@ void Style::Canvas::ReadFrom(std::istream& istream) {
 void Style::Canvas::AddShape(const Figure& shape) {
     shapes_.push_back(&shape);
 }
-
-

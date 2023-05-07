@@ -1,3 +1,4 @@
+/*
 #include <geo2d/geo2d.hpp>
 
 int main() {
@@ -13,4 +14,4 @@ int main() {
         canvas.WriteTo(out);
     }
     out.close();
-}
+}*/
