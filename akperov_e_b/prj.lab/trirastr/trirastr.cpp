@@ -41,34 +41,6 @@ void TriangleRasterizer::Draw(cv::Mat& image)
     }
 }
 
-void TriangleRasterizer::DrawExplain(cv::Mat& image)
-{
-    cv::Mat image_copy = image.clone();
-    std::vector<cv::Point> points = { v0_, v1_, v2_ };
-    cv::Rect bbox = cv::boundingRect(points);
-    cv::namedWindow("image", cv::WINDOW_NORMAL);
-    cv::resizeWindow("image", image.cols, image.rows);
-    for (int y = bbox.y; y < bbox.y + bbox.height; y++) {
-        for (int x = bbox.x; x < bbox.x + bbox.width; x++) {
-            cv::Point point(x, y);
-            cv::line(image, cv::Point(0, y), cv::Point(image.cols - 1, y), cv::Scalar(0, 0, 255), 1);
-            cv::line(image, cv::Point(x, 0), cv::Point(x, image.rows - 1), cv::Scalar(0, 0, 255), 1);
-            if (IsPointInTriangle(point)) {
-                image_copy.at<cv::Vec3b>(y, x)[0] = color0_[0];
-                image_copy.at<cv::Vec3b>(y, x)[1] = color0_[1];
-                image_copy.at<cv::Vec3b>(y, x)[2] = color0_[2];
-
-                image.at<cv::Vec3b>(y, x)[0] = color0_[0];
-                image.at<cv::Vec3b>(y, x)[1] = color0_[1];
-                image.at<cv::Vec3b>(y, x)[2] = color0_[2];
-            }
-            cv::waitKey(1);
-            cv::imshow("image", image);
-            image_copy.copyTo(image);
-        }
-    }
-}
-
 void TriangleRasterizerVu::setColor(cv::Scalar& color0, cv::Scalar& color1, cv::Scalar& color2) {
     color0_ = color0;
     color1_ = color1;

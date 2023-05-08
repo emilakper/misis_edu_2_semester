@@ -25,3 +25,9 @@ target_link_libraries(trirastr_test1 trirastr opencv_core nlohmann_json::nlohman
 
 add_executable(trirastr_test2 "trirastr_test2.cpp")
 target_link_libraries(trirastr_test2 trirastr opencv_core nlohmann_json::nlohmann_json)
+
+add_executable(trirastr_demo1 "trirastr_demo1.cpp")
+target_link_libraries(trirastr_demo1 trirastr opencv_core nlohmann_json::nlohmann_json)
+
+add_executable(trirastr_demo2 "trirastr_demo2.cpp")
+target_link_libraries(trirastr_demo2 trirastr opencv_core nlohmann_json::nlohmann_json)

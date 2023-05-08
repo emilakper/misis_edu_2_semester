@@ -28,7 +28,6 @@ public:
     @return None.
     */
     virtual void Draw(cv::Mat& image);
-    virtual void DrawExplain(cv::Mat& image);
     virtual void setColor(cv::Scalar& color0);
     void setTriangle(cv::Point& v0, cv::Point& v1, cv::Point& v2);
 private:

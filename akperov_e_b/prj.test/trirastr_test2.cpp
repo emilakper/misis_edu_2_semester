@@ -1,7 +1,6 @@
 #include <trirastr\trirastr.hpp>
 #include <fstream>
 #include <nlohmann/json.hpp>
-#include <opencv2/opencv.hpp>
 
 int main(int argc, char* argv[]) {
     std::ifstream file(argv[1]);
