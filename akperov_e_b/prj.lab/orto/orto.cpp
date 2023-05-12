@@ -1,0 +1,100 @@
+﻿
+
+#include <iostream>
+
+
+namespace geo2d {
+	namespace orto {
+		class Quad {
+		public:
+			Quad() = default;
+			Quad(const Quad&) = default;
+			~Quad() = default;
+
+
+			virtual void Scale(double& alpha)=0;
+			//virtual void Intersect(Quad& fig1, Quad& fig2)=0;
+			//virtual void Union(Quad& fig1, Quad& fig2)=0;
+		};
+
+		class Rect : public Quad {
+		public:
+			Rect() = default;
+			Rect(const Rect&) = default;
+			~Rect() = default;
+
+			Rect(double& x0, double& y0, double& height, double& width) {
+				x_center_ = x0;
+				y_center_ = y0;
+				height_ = height;
+				width_ = width;
+			};
+			virtual void Scale(double& alpha) override;
+			//virtual void Intersect(Quad& fig1, Quad& fig2) override;
+			//virtual void Union(Quad& fig1, Quad& fig2) override;
+		public:
+			double x_center_;
+			double y_center_;
+			double height_;
+			double width_;
+		};
+
+		class Square : public Quad {
+		public:
+			Square() = default;
+			Square(const Square&) = default;
+			~Square() = default;
+			Square(double& x0, double& y0, double& height) {
+				x_center_ = x0;
+				y_center_ = y0;
+				height_ = height;
+				width_ = height;
+			}
+
+			virtual void Scale(double& alpha) override;
+			//virtual void Intersect(Quad& fig1, Quad& fig2) override;
+			//virtual void Union(Quad& fig1, Quad& fig2) override;
+		public:
+			double x_center_;
+			double y_center_;
+			double height_;
+			double width_;
+		};
+
+		void Rect::Scale(double& alpha) {
+			height_ *= alpha;
+			width_ *= alpha;
+		}
+		void Square::Scale(double& alpha) {
+			height_ *= alpha;
+			width_ *= alpha;
+		}
+	}
+}
+
+int main()
+{
+	double x0 = 5.0;
+	double y0 = 5.0;
+	double height = 2.0;
+	double width = 3.0;
+	//Constructors
+	geo2d::orto::Rect rectan1(x0,y0,height,width);
+	geo2d::orto::Square square1(x0, y0, height);
+	std::cout << rectan1.x_center_ << " " <<  rectan1.y_center_ << " " << rectan1.height_ << " " << rectan1.width_ << std::endl;
+	std::cout << square1.x_center_ << " " << square1.y_center_ << " " << square1.height_  << " "<< square1.width_ << std::endl;
+	std::cout << std::endl;
+	//Constructor copy
+	geo2d::orto::Rect rectan2(rectan1);
+	geo2d::orto::Square square2(square1);
+	std::cout << rectan2.x_center_ << " " << rectan2.y_center_ << " " << rectan2.height_ << " " << rectan2.width_ << std::endl;
+	std::cout << square2.x_center_ << " " << square2.y_center_ << " " << square2.height_ << " " << square2.width_ << std::endl;
+	std::cout << std::endl;
+	//Scale
+	double alpha = 3.0;
+	rectan1.Scale(alpha);
+	square1.Scale(alpha);
+	std::cout << rectan1.x_center_ << " " << rectan1.y_center_ << " " << rectan1.height_ << " " << rectan1.width_ << std::endl;
+	std::cout << square1.x_center_ << " " << square1.y_center_ << " " << square1.height_ << " " << square1.width_ << std::endl;
+	//Intersect
+}
