@@ -17,6 +17,18 @@ project(cpp2023_test)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(doctest REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(Doxygen REQUIRED)
+
+set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/prj.cw/trirastr/Doxyfile)
+set(DOXYGEN_CONFIGURED_INPUT ${DOXYGEN_IN})
+
+add_custom_target(doc ALL
+    COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONFIGURED_INPUT}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generating API documentation with Doxygen"
+    VERBATIM
+)
 
 add_subdirectory(prj.lab)
 add_subdirectory(prj.test)
+add_subdirectory(prj.cw)

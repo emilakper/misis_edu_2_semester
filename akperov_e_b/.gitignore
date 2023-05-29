@@ -1,3 +1,5 @@
 .vs/
 bin.dbg/
 out/
+doxygen_docs/
+CMakeSettings.json

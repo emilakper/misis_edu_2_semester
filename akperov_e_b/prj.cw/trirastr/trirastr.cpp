@@ -102,8 +102,8 @@ void demoPic(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Point& v) {
     std::vector<cv::Point> points = { v0, v1, v2 };
     cv::Rect bbox = cv::boundingRect(points);
 
-    // Создаем файл Tikz
-    std::ofstream tikzFile("trirastr_demo.tex");
+    // Создаем файл TikzC:
+    std::ofstream tikzFile("../data/results/trirastr_demo.tex");
 
     // Записываем заголовок файла
     tikzFile << "\\documentclass[tikz]{standalone}\n"
@@ -152,6 +152,7 @@ void demoPic(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Point& v) {
     tikzFile << "\\node[scale = 20] at(" << v0.x - 3 << "," << v0.y << ") {A};\n";
     tikzFile << "\\node[scale = 20] at(" << v1.x + 3 << "," << v1.y << ") {B};\n";
     tikzFile << "\\node[scale = 20] at(" << v2.x + 3 << "," << v2.y << ") {C};\n";
+    tikzFile << "\\node[scale = 20] at(H) [below] {H};\n";
 
     //Рядом с картинкой прописываем полученные с помощью формул значения для каждой прямой
     tikzFile << "\\node[scale = 20] at(75, 140) { AB:a = " << v0.y - v1.y << ", b = "
@@ -172,7 +173,7 @@ void demoPicVu(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Point& v) {
     cv::Rect bbox = cv::boundingRect(points);
 
     // Создаем файл Tikz
-    std::ofstream tikzFile("trirastr_demoVu.tex");
+    std::ofstream tikzFile("../data/results/trirastr_demoVu.tex");
 
     // Записываем заголовок файла
     tikzFile << "\\documentclass[tikz]{standalone}\n"

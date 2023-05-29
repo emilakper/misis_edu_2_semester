@@ -19,6 +19,6 @@ int main(int argc, char* argv[]) {
         demoPic(v0, v1, v2, v);
     }
     catch (const std::exception& e) {
-        std::cout << "Error: " << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
     }
 }

@@ -15,13 +15,11 @@ int main(int argc, char* argv[]) {
         cv::Point v3(j["point3"]["x"], j["point3"]["y"]);
 
         cv::Scalar color1(j["color1"]["B"], j["color1"]["G"], j["color1"]["R"]);
-        cv::Scalar color2(j["color2"]["B"], j["color2"]["G"], j["color2"]["R"]);
-        cv::Scalar color3(j["color3"]["B"], j["color3"]["G"], j["color3"]["R"]);
 
         cv::Mat img(j["img"]["height"], j["img"]["width"], CV_8UC3);
-        img = cv::Scalar{j["img"]["B"],j["img"]["G"],j["img"]["R"]};
+        img = cv::Scalar{ j["img"]["B"],j["img"]["G"],j["img"]["R"] };
 
-        TriangleRasterizerVu example(v1, v2, v3, color1, color2, color3);
+        TriangleRasterizer example(v1, v2, v3, color1);
         example.Draw(img);
         cv::namedWindow("image", cv::WINDOW_NORMAL);
         cv::resizeWindow("image", img.cols, img.rows);
@@ -29,6 +27,6 @@ int main(int argc, char* argv[]) {
         cv::waitKey(0);
     }
     catch (const std::exception& e) {
-            std::cout << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
     }
 }
