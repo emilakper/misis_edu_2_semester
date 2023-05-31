@@ -93,5 +93,5 @@ endif()
 
 if(DOXYGEN_FOUND)
        install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_docs
-               DESTINATION doxygen_docs)
+               DESTINATION ${CMAKE_INSTALL_PREFIX})
    endif()
