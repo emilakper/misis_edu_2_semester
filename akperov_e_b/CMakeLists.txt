@@ -7,6 +7,7 @@ set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "cmake")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True) 
+set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "..." FORCE)
@@ -21,61 +22,71 @@ add_subdirectory(prj.lab)
 add_subdirectory(prj.test)
 add_subdirectory(prj.cw)
 
-install(TARGETS trirastr_test trirastr_testVu trirastr_demo trirastr_demoVu arrayt_test matrixs_test arrayd_test rational_test
+install(TARGETS trirastr_test trirastr_testVu trirastr_demo trirastr_demoVu arrayt_test matrixs_test arrayd_test rational_test RUNTIME
   DESTINATION bin
 )
 
-if(WIN32)
-  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    install(FILES "${VCPKG_INSTALLED_DIR}/x64-windows/bin/zlib1.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/tiff.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/opencv_videoio4.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/opencv_imgproc4.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/opencv_imgcodecs4.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/opencv_highgui4.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/opencv_core4.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/libwebp.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/libwebpdecoder.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/libsharpyuv.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/libpng16.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/liblzma.dll"
-                "${VCPKG_INSTALLED_DIR}/x64-windows/bin/jpeg62.dll"
-          DESTINATION bin)
-  else()
-   install(FILES "${VCPKG_INSTALLED_DIR}/x32-windows/bin/zlib1.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/tiff.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/opencv_videoio4.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/opencv_imgproc4.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/opencv_imgcodecs4.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/opencv_highgui4.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/opencv_core4.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/libwebp.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/libwebpdecoder.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/libsharpyuv.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/libpng16.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/liblzma.dll"
-                "${VCPKG_INSTALLED_DIR}/x32-windows/bin/jpeg62.dll"
-          DESTINATION bin)
-  endif()
-  else()
-   install(FILES "${VCPKG_INSTALLED_DIR}/lib/libz.so.1"
-                "${VCPKG_INSTALLED_DIR}/lib/libtiff.so.5"
-                "${VCPKG_INSTALLED_DIR}/lib/libopencv_videoio.so.4.1"
-                "${VCPKG_INSTALLED_DIR}/lib/libopencv_imgproc.so.4.1"
-                "${VCPKG_INSTALLED_DIR}/lib/libopencv_imgcodecs.so.4.1"
-                "${VCPKG_INSTALLED_DIR}/lib/libopencv_highgui.so.4.1"
-                "${VCPKG_INSTALLED_DIR}/lib/libopencv_core.so.4.1"
-                "${VCPKG_INSTALLED_DIR}/lib/libwebp.so.7"
-                "${VCPKG_INSTALLED_DIR}/lib/libwebpdecoder.so.3"
-                "${VCPKG_INSTALLED_DIR}/lib/libsharpyuv.so.3"
-                "${VCPKG_INSTALLED_DIR}/lib/libpng16.so.16"
-                "${VCPKG_INSTALLED_DIR}/lib/liblzma.so.5"
-                "${VCPKG_INSTALLED_DIR}/lib/libjpeg.so.62"
-          DESTINATION /usr/local/lib)
-endif()
-
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/data/
   DESTINATION data
+)
+
+if(WIN32)
+    set(OpenCV_RUNTIME_PATH "${OpenCV_DIR}/../../bin")
+else()
+    set(OpenCV_RUNTIME_PATH "${OpenCV_DIR}/../../lib")
+endif()
+
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*zlib*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*tiff*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*opencv_videoio*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*opencv_imgproc*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*opencv_imgcodecs*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*opencv_highgui*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*opencv_core*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*libwebpdecoder*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*libsharpyuv*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*libpng*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*liblzma*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*jpeg*"
+)
+install(DIRECTORY "${OpenCV_RUNTIME_PATH}/"
+  DESTINATION bin
+  FILES_MATCHING PATTERN "*libwebp*"
 )
 
 if(DOXYGEN_FOUND)
@@ -92,6 +103,6 @@ if(DOXYGEN_FOUND)
 endif()
 
 if(DOXYGEN_FOUND)
-       install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_docs
-               DESTINATION ${CMAKE_INSTALL_PREFIX})
+       install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_docs/latex
+               DESTINATION docs)
    endif()
