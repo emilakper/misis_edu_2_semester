@@ -21,7 +21,7 @@ public:
     @param v0 Первая вершина треугольника.
     @param v1 Вторая вершина треугольника.
     @param v2 Третья вершина треугольника.
-    @param color0 Цвет треугольника.
+    @param color0 Цвет треугольника(модель BGR, значения от 0 до 255).
     */
     TriangleRasterizer(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Scalar& color0);
     /**
@@ -33,7 +33,7 @@ public:
     /**
     @brief Метод для установки цвета в треугольнике.
 
-    @param color0 Цвет треугольника.
+    @param color0 Цвет треугольника(модель BGR, значения от 0 до 255).
     */
     virtual void setColor(cv::Scalar& color0);
     /**
@@ -56,7 +56,7 @@ protected:
     cv::Point v0_{ 0, 0 };/**< Первая вершина треугольника. */
     cv::Point v1_{ 0, 0 };/**< Вторая вершина треугольника. */
     cv::Point v2_{ 0, 0 };/**< Третья вершина треугольника. */
-    cv::Scalar color0_{ 0, 0, 0 };/**< Цвет треугольника */
+    cv::Scalar color0_{ 0, 0, 0 };/**< Цвет треугольника(модель BGR, значения от 0 до 255). */
 };
 
 class TriangleRasterizerVu : protected TriangleRasterizer {
@@ -73,9 +73,9 @@ public:
     @param v0 Первая вершина треугольника.
     @param v1 Вторая вершина треугольника.
     @param v2 Третья вершина треугольника.
-    @param color0 Первый цвет треугольника.
-    @param color1 Второй цвет треугольника.
-    @param color2 Третий цвет треугольника.
+    @param color0 Первый цвет треугольника(модель BGR, значения от 0 до 255).
+    @param color1 Второй цвет треугольника(модель BGR, значения от 0 до 255).
+    @param color2 Третий цвет треугольника(модель BGR, значения от 0 до 255).
     */
     TriangleRasterizerVu(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Scalar& color0, cv::Scalar& color1, cv::Scalar& color2);
     /**
@@ -87,9 +87,9 @@ public:
     /**
     @brief Метод для установки трех цветов для каждой вершины треугольника.
 
-    @param color0 Первый цвет треугольника.
-    @param color1 Второй цвет треугольника.
-    @param color2 Третий цвет треугольника.
+    @param color0 Первый цвет треугольника(модель BGR, значения от 0 до 255).
+    @param color1 Второй цвет треугольника(модель BGR, значения от 0 до 255).
+    @param color2 Третий цвет треугольника(модель BGR, значения от 0 до 255).
     */
     virtual void setColor(cv::Scalar& color0, cv::Scalar& color1, cv::Scalar& color2) final;
 private:
@@ -121,8 +121,8 @@ private:
     */
     cv::Scalar InterpolateColors(double w0, double w1, double w2);
 protected:
-    cv::Scalar color1_{ 0, 0, 0 };/**< Второй цвет треугольника */
-    cv::Scalar color2_{ 0, 0, 0 };/**< Третий цвет треугольника */
+    cv::Scalar color1_{ 0, 0, 0 };/**< Второй цвет треугольника(модель BGR, значения от 0 до 255) */
+    cv::Scalar color2_{ 0, 0, 0 };/**< Третий цвет треугольника(модель BGR, значения от 0 до 255) */
 };
 
 

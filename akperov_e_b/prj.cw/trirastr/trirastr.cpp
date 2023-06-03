@@ -102,33 +102,33 @@ void demoPic(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Point& v) {
     std::vector<cv::Point> points = { v0, v1, v2 };
     cv::Rect bbox = cv::boundingRect(points);
 
-    // Создаем файл TikzC:
+    // РЎРѕР·РґР°РµРј С„Р°Р№Р» TikzC:
     std::ofstream tikzFile("../data/results/trirastr_demo.tex");
 
-    // Записываем заголовок файла
+    // Р—Р°РїРёСЃС‹РІР°РµРј Р·Р°РіРѕР»РѕРІРѕРє С„Р°Р№Р»Р°
     tikzFile << "\\documentclass[tikz]{standalone}\n"
         << "\\usepackage{tkz-euclide}\n" 
         << "\\begin{document}\n"
         << "\\begin{tikzpicture}[xscale=1,yscale=-1]\n";
 
-    // Задаем размер полотна
+    // Р—Р°РґР°РµРј СЂР°Р·РјРµСЂ РїРѕР»РѕС‚РЅР°
     tikzFile << "\\tkzInit[xmin=0,xmax=210,ymin=0,ymax=200]\n"
         << "\\tkzClip\n";
 
-    //Задаем вершины треугольника и рассматриваемый пиксель
+    //Р—Р°РґР°РµРј РІРµСЂС€РёРЅС‹ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР° Рё СЂР°СЃСЃРјР°С‚СЂРёРІР°РµРјС‹Р№ РїРёРєСЃРµР»СЊ
     tikzFile << "\\coordinate (A) at (" << v0.x << "," << v0.y << ");\n";
     tikzFile << "\\coordinate (B) at (" << v1.x << "," << v1.y << ");\n";
     tikzFile << "\\coordinate (C) at (" << v2.x << "," << v2.y << ");\n";
     tikzFile << "\\coordinate (H) at (" << v.x << "," << v.y << ");\n";
 
 
-    // Рисуем рамку, по которой пробегается алгоритм
+    // Р РёСЃСѓРµРј СЂР°РјРєСѓ, РїРѕ РєРѕС‚РѕСЂРѕР№ РїСЂРѕР±РµРіР°РµС‚СЃСЏ Р°Р»РіРѕСЂРёС‚Рј
     tikzFile << "\\draw[blue](A) rectangle (C);\n";
 
-    // Рисуем треугольник
+    // Р РёСЃСѓРµРј С‚СЂРµСѓРіРѕР»СЊРЅРёРє
     tikzFile << "\\draw[red](A) -- (B) -- (C) -- cycle;\n";
 
-    // Проводим рассчеты и рисуем рассматриваемый пиксель
+    // РџСЂРѕРІРѕРґРёРј СЂР°СЃСЃС‡РµС‚С‹ Рё СЂРёСЃСѓРµРј СЂР°СЃСЃРјР°С‚СЂРёРІР°РµРјС‹Р№ РїРёРєСЃРµР»СЊ
     int aSide = (v0.y - v1.y) * v.x + (v1.x - v0.x) * v.y + (v0.x * v1.y - v1.x * v0.y);
     int bSide = (v1.y - v2.y) * v.x + (v2.x - v1.x) * v.y + (v1.x * v2.y - v2.x * v1.y);
     int cSide = (v2.y - v0.y) * v.x + (v0.x - v2.x) * v.y + (v2.x * v0.y - v0.x * v2.y);
@@ -140,7 +140,7 @@ void demoPic(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Point& v) {
         tikzFile << "\\draw(" << v.x - 0.5 << "," << v.y - 0.5
             << ") rectangle(" << v.x + 0.5 << "," << v.y + 0.5 << ");\n";
     }
-    // Рисуем высоты до прямых, проходящих через отрезки 
+    // Р РёСЃСѓРµРј РІС‹СЃРѕС‚С‹ РґРѕ РїСЂСЏРјС‹С…, РїСЂРѕС…РѕРґСЏС‰РёС… С‡РµСЂРµР· РѕС‚СЂРµР·РєРё 
     tikzFile << "\\path(H) -- ($(A)!(H)!(B)$) coordinate(D);\n\
                  \\path(H) -- ($(B)!(H)!(C)$) coordinate(E);\n\
                  \\path(H) -- ($(A)!(H)!(C)$) coordinate(F);\n";
@@ -148,13 +148,13 @@ void demoPic(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Point& v) {
                  \\tkzDrawSegment[style = dashed](H, E);\n\
                  \\tkzDrawSegment[style = dashed](H, F);\n";
 
-    //Подписываем вершины
+    //РџРѕРґРїРёСЃС‹РІР°РµРј РІРµСЂС€РёРЅС‹
     tikzFile << "\\node[scale = 20] at(" << v0.x - 3 << "," << v0.y << ") {A};\n";
     tikzFile << "\\node[scale = 20] at(" << v1.x + 3 << "," << v1.y << ") {B};\n";
     tikzFile << "\\node[scale = 20] at(" << v2.x + 3 << "," << v2.y << ") {C};\n";
     tikzFile << "\\node[scale = 20] at(H) [below] {H};\n";
 
-    //Рядом с картинкой прописываем полученные с помощью формул значения для каждой прямой
+    //Р СЏРґРѕРј СЃ РєР°СЂС‚РёРЅРєРѕР№ РїСЂРѕРїРёСЃС‹РІР°РµРј РїРѕР»СѓС‡РµРЅРЅС‹Рµ СЃ РїРѕРјРѕС‰СЊСЋ С„РѕСЂРјСѓР» Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ РєР°Р¶РґРѕР№ РїСЂСЏРјРѕР№
     tikzFile << "\\node[scale = 20] at(75, 140) { AB:a = " << v0.y - v1.y << ", b = "
         << v1.x - v0.x << ", c = " << v0.x * v1.y - v1.x * v0.y << ", aSide=" << aSide << "};\n";
     tikzFile << "\\node[scale = 20] at(75, 160) { BC:a = " << v1.y - v2.y << ", b = "
@@ -162,7 +162,7 @@ void demoPic(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Point& v) {
     tikzFile << "\\node[scale = 20] at(75, 180) { CA:a = " << v2.y - v0.y << ", b = "
         << v0.x - v2.x << ", c = " << v2.x * v0.y - v0.x * v2.y << ", cSide=" << cSide << "};\n";
 
-    // Рисуем изображение в файле Tikz
+    // Р РёСЃСѓРµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІ С„Р°Р№Р»Рµ Tikz
     tikzFile << "\\end{tikzpicture}\n"
         << "\\end{document}\n";
     tikzFile.close();
@@ -172,36 +172,36 @@ void demoPicVu(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Point& v) {
     std::vector<cv::Point> points = { v0, v1, v2 };
     cv::Rect bbox = cv::boundingRect(points);
 
-    // Создаем файл Tikz
+    // РЎРѕР·РґР°РµРј С„Р°Р№Р» Tikz
     std::ofstream tikzFile("../data/results/trirastr_demoVu.tex");
 
-    // Записываем заголовок файла
+    // Р—Р°РїРёСЃС‹РІР°РµРј Р·Р°РіРѕР»РѕРІРѕРє С„Р°Р№Р»Р°
     tikzFile << "\\documentclass[tikz]{standalone}\n"
         << "\\usepackage{tkz-euclide}\n"
         << "\\begin{document}\n"
         << "\\begin{tikzpicture}[xscale=1,yscale=-1]\n";
 
-    // Задаем размер полотна
+    // Р—Р°РґР°РµРј СЂР°Р·РјРµСЂ РїРѕР»РѕС‚РЅР°
     tikzFile << "\\tkzInit[xmin=0,xmax=210,ymin=0,ymax=200]\n"
         << "\\tkzClip\n";
 
-    //Задаем вершины треугольника и рассматриваемый пиксель
+    //Р—Р°РґР°РµРј РІРµСЂС€РёРЅС‹ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР° Рё СЂР°СЃСЃРјР°С‚СЂРёРІР°РµРјС‹Р№ РїРёРєСЃРµР»СЊ
     tikzFile << "\\coordinate (A) at (" << v0.x << "," << v0.y << ");\n";
     tikzFile << "\\coordinate (B) at (" << v1.x << "," << v1.y << ");\n";
     tikzFile << "\\coordinate (C) at (" << v2.x << "," << v2.y << ");\n";
     tikzFile << "\\coordinate (H) at (" << v.x << "," << v.y << ");\n";
 
-    // Рисуем рамку, по которой пробегается алгоритм
+    // Р РёСЃСѓРµРј СЂР°РјРєСѓ, РїРѕ РєРѕС‚РѕСЂРѕР№ РїСЂРѕР±РµРіР°РµС‚СЃСЏ Р°Р»РіРѕСЂРёС‚Рј
     tikzFile << "\\draw[blue](A) rectangle (C);\n";
 
-    // Рисуем треугольник и достаиваем треугольники до пикселя
+    // Р РёСЃСѓРµРј С‚СЂРµСѓРіРѕР»СЊРЅРёРє Рё РґРѕСЃС‚Р°РёРІР°РµРј С‚СЂРµСѓРіРѕР»СЊРЅРёРєРё РґРѕ РїРёРєСЃРµР»СЏ
     tikzFile << "\\draw[red](A) -- (B) -- (C) -- cycle;\n";
 
     tikzFile << "\\draw (A) -- (H);\n\
                  \\draw(B) -- (H);\n\
                  \\draw(C) -- (H);\n";
 
-    //Задаем рассматриваемый пиксель для треугольника, рассчитываем веса и красим пиксель
+    //Р—Р°РґР°РµРј СЂР°СЃСЃРјР°С‚СЂРёРІР°РµРјС‹Р№ РїРёРєСЃРµР»СЊ РґР»СЏ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°, СЂР°СЃСЃС‡РёС‚С‹РІР°РµРј РІРµСЃР° Рё РєСЂР°СЃРёРј РїРёРєСЃРµР»СЊ
     double denom = (v1.y - v2.y) * (v0.x - v2.x) + (v2.x - v1.x) * (v0.y - v2.y);
     double w0 = ((v1.y - v2.y) * (v.x - v2.x) + (v2.x - v1.x) * (v.y - v2.y)) / denom;
     double w1 = ((v2.y - v0.y) * (v.x - v2.x) + (v0.x - v2.x) * (v.y - v2.y)) / denom;
@@ -216,16 +216,16 @@ void demoPicVu(cv::Point& v0, cv::Point& v1, cv::Point& v2, cv::Point& v) {
             v.x + 0.5 << "," << v.y + 0.5 << ");\n";
     }
 
-    //Подписываем вершины
+    //РџРѕРґРїРёСЃС‹РІР°РµРј РІРµСЂС€РёРЅС‹
     tikzFile << "\\node[scale = 20] at(" << v0.x - 3 << "," << v0.y << ") {A};\n";
     tikzFile << "\\node[scale = 20] at(" << v1.x + 3 << "," << v1.y << ") {B};\n";
     tikzFile << "\\node[scale = 20] at(" << v2.x + 3 << "," << v2.y << ") {C};\n";
     tikzFile << "\\node[scale = 20] at(H) [above] {H};\n";
-    //Рядом с картинкой прописываем полученные с помощью формул значения для каждой прямой
+    //Р СЏРґРѕРј СЃ РєР°СЂС‚РёРЅРєРѕР№ РїСЂРѕРїРёСЃС‹РІР°РµРј РїРѕР»СѓС‡РµРЅРЅС‹Рµ СЃ РїРѕРјРѕС‰СЊСЋ С„РѕСЂРјСѓР» Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ РєР°Р¶РґРѕР№ РїСЂСЏРјРѕР№
     tikzFile << "\\node[scale = 20] at(75, 140) { w0 = " << w0 << ", w1 ="
         << w1 << ", w2 = " << w2 << "};\n";
 
-    // Рисуем изображение в файле Tikz
+    // Р РёСЃСѓРµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІ С„Р°Р№Р»Рµ Tikz
     tikzFile << "\\end{tikzpicture}\n"
         << "\\end{document}\n";
     tikzFile.close();
