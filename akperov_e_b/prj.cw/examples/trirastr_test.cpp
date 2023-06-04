@@ -1,4 +1,4 @@
-#include <trirastr\trirastr.hpp>
+#include <trirastr/trirastr.hpp>
 #include <fstream>
 #include <nlohmann/json.hpp>
 
