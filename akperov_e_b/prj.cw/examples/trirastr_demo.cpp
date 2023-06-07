@@ -28,13 +28,24 @@ int main(int argc, char* argv[]) {
             throw std::invalid_argument("Error: invalid JSON structure (point3)");
         }
         if (!j.contains("pixel") || !j["pixel"].contains("x") || !j["pixel"].contains("y")) {
-            throw std::invalid_argument("Error: invalid JSON structure (point3)");
+            throw std::invalid_argument("Error: invalid JSON structure (pixel)");
         }
         cv::Point v0(j["point1"]["x"], j["point1"]["y"]);
         cv::Point v1(j["point2"]["x"], j["point2"]["y"]);
         cv::Point v2(j["point3"]["x"], j["point3"]["y"]);
         cv::Point v(j["pixel"]["x"], j["pixel"]["y"]);
+
+        if (v0.x < 0 || v1.x < 0 || v2.x < 0 || v.x<0 || 
+            v0.x >= 211 || v1.x >= 211 || v2.x >= 211 || v.x >= 211) {
+            throw std::invalid_argument("Error: triangle vertices are out of image bounds(0-210)");
+        }
+
+        if (v0.y < 0 || v1.y < 0 || v2.y < 0 || v.y < 0 || 
+            v0.y >= 201 || v1.y >= 201 || v2.y >= 201 || v.y >= 201) {
+            throw std::invalid_argument("Error: triangle vertices are out of image bounds(0-200)");
+        }
         demoPic(v0, v1, v2, v);
+        //tkzInit[xmin=0,xmax=210,ymin=0,ymax=200
     }
     catch (const std::exception& e) {
         std::cout << e.what() << std::endl;

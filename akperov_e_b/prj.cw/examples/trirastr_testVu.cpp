@@ -53,6 +53,14 @@ int main(int argc, char* argv[]) {
         cv::Mat img(j["img"]["height"], j["img"]["width"], CV_8UC3);
         img = cv::Scalar{j["img"]["B"],j["img"]["G"],j["img"]["R"]};
 
+        if (v1.x < 0 || v2.x < 0 || v3.x < 0 || v1.x >= img.cols || v2.x >= img.cols || v3.x >= img.cols) {
+            throw std::invalid_argument("Error: triangle vertices are out of image bounds");
+        }
+
+        if (v1.y < 0 || v2.y < 0 || v3.y < 0 || v1.y >= img.rows || v2.y >= img.rows || v3.y >= img.rows) {
+            throw std::invalid_argument("Error: triangle vertices are out of image bounds");
+        }
+
         TriangleRasterizerVu example(v1, v2, v3, color1, color2, color3);
         example.Draw(img);
         cv::namedWindow("image", cv::WINDOW_NORMAL);
